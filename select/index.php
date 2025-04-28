@@ -23,7 +23,7 @@ if(!is_numeric($score) || $score<0 || $score>100){
     $score = null;
 }
 echo "<br>";
-echo "你的成績是:" .$score."分";
+echo "你的成績是:" . $score ."分";
 echo "<br>";
 echo "判定結果:";
 if($score>=60){
