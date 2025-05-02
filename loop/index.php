@@ -127,7 +127,11 @@ for($j=3; $j<=100; $j=$j+2){
                 echo "<td>$j</td>";
 
             for($i=1; $i<=9; $i++){//負責格子
+                
                 echo "<td> ". ($j * $i) . "</td>";
+                //課堂練習:票價表
+                //整個右上半部不顯示
+                //每一格都要判斷這一格要不要顯示
             }
 
             echo "</tr>";
@@ -136,6 +140,123 @@ for($j=3; $j<=100; $j=$j+2){
     
 </table>
 
+<h2>斜角九九乘法表</h2>
+ <style>
+    #tt{
+        border-collapse:collapse;
+        margin: 20px;
+        box-shadow:2px 2px 15px blue;
+    }
+    #tt td{
+        padding: 3px 6px;
+        border: 1px solid #CCC;
+        text-align: center;
+        width: 25px;
+        text-shadow:1px 1px 2px #99f; 
+    }
+    #tt tr:nth-child(1),
+    #tt td:nth-child(1){
+        background-color: #999;
+        color: white;
+    }
+    #tt td:hover{
+        background-color:yellow;
+        color:skyblue;
+    }
+ </style>       
+<table id='tt'>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+        <?php
+        for($j=1; $j<=9; $j++){//負責橫列的動作
+
+            echo "<tr>";
+                echo "<td>$j</td>";
+
+            for($i=1; $i<=9; $i++){//負責格子
+                if($i<=$j){
+                    echo "<td> ". ($j * $i) . "</td>";
+                }
+
+                //課堂練習:票價表
+                //整個右上半部不顯示
+                //每一格都要判斷這一格要不要顯示
+            }
+
+            echo "</tr>";
+        }
+        ?>
+    
+</table>
+
+<h2>斜角九九乘法表-反向</h2>
+ <style>
+    #tt{
+        border-collapse:collapse;
+        margin: 20px;
+        box-shadow:2px 2px 15px blue;
+    }
+    #tt td{
+        padding: 3px 6px;
+        border: 1px solid #CCC;
+        text-align: center;
+        width: 25px;
+        text-shadow:1px 1px 2px #99f; 
+    }
+    #tt tr:nth-child(1),
+    #tt td:nth-child(1){
+        background-color: #999;
+        color: white;
+    }
+    #tt td:hover{
+        background-color:yellow;
+        color:skyblue;
+    }
+ </style>       
+<table id='tt'>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+        <?php
+        for($j=1; $j<=9; $j++){//負責橫列的動作
+
+            echo "<tr>";
+                echo "<td>$j</td>";
+
+            for($i=1; $i<=9; $i++){//負責格子
+                if($i>=$j){ //!!!注意這行!!!
+                    echo "<td> ". ($j * $i) . "</td>";
+                }
+
+                //課堂練習:票價表
+                //整個右上半部不顯示
+                //每一格都要判斷這一格要不要顯示
+            }
+
+            echo "</tr>";
+        }
+        ?>
+    
+</table>
 
 </body>
 </html>
