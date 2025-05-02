@@ -29,6 +29,7 @@
         <li><a href="var.php">變數</a></li>
         <li><a href="./select/index.php">判斷式</a></li>
         <li><a href="./loop/index.php">迴圈-重覆結構</a></li>
+        <li><a href="./loop/stars.php">迴圈-畫星星</a></li>
         <li><a href="./array/">陣列</a></li>
         <li><a href="./array/index.php">字串</a></li>
     </ul>
