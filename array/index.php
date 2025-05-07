@@ -44,6 +44,30 @@ foreach($students as $name => $score){
     }
     echo "</ul>";
 }
+
+$names = array_keys($students);
+for($i=0;$i<count($names);$i++){
+
+    $n=$students[$names[$i]];
+    $subjects=array_keys($n);
+
+    echo $names[$i];
+    echo "的成績<br>";
+
+    $tt=$students[$names[$i]];
+    for($j=0;$j<count($tt);$j++){
+        echo $subjects[$j];
+        echo ":";
+        echo $tt[$subjects[$j]];
+        echo "<br>";
+    }
+    //print_r($students[$names[$i]]);
+//    echo $names[$i];
+
+}
+
+
+
 ?>
 
 
