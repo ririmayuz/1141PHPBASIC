@@ -61,6 +61,7 @@ for($j=3; $j<=100; $j=$j+2){
 
             for($i=1; $i<=9; $i++){
                 echo "<td>$i x$j = ". ($j * $i) . "</td>";
+                //echo "<td>". ($i * $j). ($j * $i) ."</td>";
             }
 
             echo "</tr>";

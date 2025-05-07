@@ -30,13 +30,16 @@ $students = [
 //     echo $test[$i];
 // }
 
+// foreach ($variable as $key => $value) {
+//     # code...
+// }
 
 //把每個元素放給$student這個變數
-foreach($students as $name => $score){
+foreach($students as $name => $score){//前面先做好一個陣列之後用foreach來拉出值
     
     echo $name."=";
     echo "<ul style='list-style-type:circle'>";
-    foreach($score as $subject => $s){
+    foreach($score as $subject => $s){//$s=成績
         echo "<li >";
         echo $subject .":";
         echo $s;
@@ -55,7 +58,7 @@ for($i=0;$i<count($names);$i++){
     echo "的成績<br>";
 
     $tt=$students[$names[$i]];
-    for($j=0;$j<count($tt);$j++){
+    for($j=0;$j<count($tt);$j++){ 
         echo $subjects[$j];
         echo ":";
         echo $tt[$subjects[$j]];
@@ -66,11 +69,52 @@ for($i=0;$i<count($names);$i++){
 
 }
 
+//echo只能印字串,要用serialize轉出
+$sss=serialize($students);
+echo $sss;
+echo "<br>";
+$aa=unserialize($sss);
+print_r($aa);
 
+echo "<hr>";
+
+$sss=json_encode($students);
+echo($sss);
+echo "<br>";
+$aa=json_decode($sss);
+print_r($aa);
 
 ?>
 
+<h2>利用程式來產生陣列</h2>
+<ul>
+    <li>以迴圈的方式產生一個九九乘法表</li>
+    <li>將九九乘法表的每個項目以字串型式存入陣列中</li>
+    <li>再以迴圈方式將陣列內容印出</li>
+</ul>
 
+<?php
+$array = [];
+
+for($i=1;$i<=9;$i++){
+    for($j=1;$j<=9;$j++){
+        $result = "$i x $j = " . ($i * $j) ;
+        $array[]=$result;
+    }
+
+}
+
+// echo "<pre>";
+// print_r($array);
+// echo "</pre>";
+
+foreach($array as $value){
+    echo $value . "<br>";
+}
+
+
+//echo $array[30];
+?>
 
 </body>
 </html>
