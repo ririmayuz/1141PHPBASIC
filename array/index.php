@@ -11,6 +11,7 @@
 
 <?php
 // $subject = ['國文','英文','數學','地理','歷史'];
+//雖然用一個陣列就代表所有東西但不能用for列出內容
 $students = [
     'judy' =>[  '國文' => 95, '英文' => 64, '數學' => 70, '地理' => 90, '歷史' => 84 ],
     'amo'  =>[  '國文' => 88, '英文' => 78, '數學' => 54, '地理' => 81, '歷史' => 71 ],
@@ -18,7 +19,34 @@ $students = [
     'peter'=>[  '國文' => 59, '英文' => 32, '數學' => 77, '地理' => 54, '歷史' => 42 ],
     'hebe' =>[  '國文' => 71, '英文' => 62, '數學' => 80, '地理' => 62, '歷史' => 64 ],
 ];
+
+// echo key($students['judy']); //跑看看結果觀察指標，不加['judy']的也嘗試
+// for($i=0;$i<count($students);$i++){
+
+// }
+//count($test)也就是 5
+// $test=[95, 64, 70, 90, 84];
+// for($i=0;$i<count($test);$i++){
+//     echo $test[$i];
+// }
+
+
+//把每個元素放給$student這個變數
+foreach($students as $name => $score){
+    
+    echo $name."=";
+    echo "<ul style='list-style-type:circle'>";
+    foreach($score as $subject => $s){
+        echo "<li >";
+        echo $subject .":";
+        echo $s;
+        echo "</li>";
+    }
+    echo "</ul>";
+}
 ?>
+
+
 
 </body>
 </html>
