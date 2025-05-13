@@ -38,22 +38,23 @@
 
     <h2>時間戳記</h2> 
     <?php 
-    // 取得當前的時間戳記
+    
     $timestamp = time(); // 取得當前的時間戳記
     echo "當前的時間戳記：$timestamp<br>";
     
-    // 將字串轉換為時間戳記
+    
     $dateString = "2023-10-01 12:00:00";
     echo "日期字串：" . $dateString . "<br>";
     $timestampFromString = strtotime($dateString); // 將字串轉換為時間戳記
     echo "字串轉換為時間戳記：$timestampFromString<br>";
     
-    // 將時間戳記轉換為日期字串
+    
     $dateFromTimestamp = date("Y-m-d H:i:s", $timestamp); // 將時間戳記轉換為日期字串
     echo "時間戳記轉換為日期字串：$dateFromTimestamp<br>";
     ?>
+
     <h2>給定兩個日期，計算中間間隔天數</h2>
-<?php
+    <?php
     $date1="2025-5-01"; // 設定第一個日期
     $date2="2025-5-21"; // 設定第二個日期
     echo "日期1：$date1<br>";
@@ -65,9 +66,9 @@
     $days=($diff/(60*60*24)); // 將差值轉換為天數
     echo "兩個日期相差 $days 天<br>"; // 輸出結果
 
-?>
-<h2>strtotime的用法</h2>
-<?php
+    ?>
+    <h2>strtotime的用法</h2>
+    <?php
 
     // strtotime() 函式可以將日期字串轉換為時間戳記
     $dateString1 = "2023-10-01 12:00:00"; // 設定日期字串
@@ -107,12 +108,35 @@
     $timestamp3 = strtotime("+15 day",strtotime($date)); // 將日期字串轉換為時間戳記$date); // 將日期字串轉換為時間戳記
     echo "日期字串：$date<br>";
     echo "15天後的日期：".date("Y-m-d H:i:s", $timestamp3)."<br><br>";
-?>
+
+    ?>
 
     <h2>計算距離自己下一次生日還有幾天</h2>
     <?php
+    //設定生日
+    $birthday = "1993-06-07";
+    $birthday_array = explode("-", $birthday);//將生日字串轉成陣列
+    $birthday_array[0]=date("Y");//將升四的年份改為當前年分
 
+    $nextBirthday = join("-",$birthday_array);//將陣列轉為字串
+
+    //接著要算生日過了沒
+    // $today = strtotime("now");
+    $today = strtotime(date("Y-m-d"));//取得當前的時間戳記
+    $birthday_timestamp=strtotime($nextBirthday);//生日字串轉時間戳記
+    //echo "生日的時間戳記：$birthday_timestamp<br>";
+ 
     
+    if($today > $birthday_timestamp){
+//還沒過就把生日的時間戳再+1年再轉成生日的時間，確保生日的時間戳永遠都是之後的時間，比今天還要大
+        $birthday_timestamp = strtotime("+1 year",$birthday_timestamp);
+    }
+     $birthday_diff = $birthday_timestamp - $today ; //計算兩個時間戳記的差值
+     $days = ($birthday_diff/(60*60*24)); //把差值轉成天數
+
+     echo "我的出生日是: $birthday <br>" ;
+     echo "距離自己下一個生日還有 $days 天";
+
     ?>
 </body>
 
