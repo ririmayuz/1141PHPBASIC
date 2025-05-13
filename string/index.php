@@ -131,24 +131,87 @@
     從最新氣溫趨勢圖來看，未來一週的高低溫落差明顯，氣象署提醒民眾特別注意清晨與夜間的氣溫變化，尤其是北部與花東地區最為明顯，日夜溫差甚至達到10度以上。對於即將迎接週末活動的民眾，氣象署建議應留意天氣轉變訊息，避免在午後雷陣雨期間安排登山、戶外活動。如遇強降雨或雷擊，也務必暫避開闢空曠地區，以策安全。";
     echo $str;
     $keywords = ["氣象署", "降雨", "天氣", "氣溫"];
-    $style=["font-size: 1.1em;color:red;",
-            "font-size: 1.1em;color:blue;",
-            "font-size: 1.1em;color:green;",
-            "font-size: 1.1em;color:orange;"];
+    $style = [
+        "font-size: 1.1em;color:red;",
+        "font-size: 1.1em;color:blue;",
+        "font-size: 1.1em;color:green;",
+        "font-size: 1.1em;color:orange;"
+    ];
     //在指定關鍵字中+url連結
-    $url=[];
-    
-    foreach($keywords as $index => $keyword){
-        $str=str_replace("$keyword",
-        "<span style='$style[$index]'>$keyword</span>",
-        $str);
+    $url = [
+        "https://www.cwa.gov.tw",
+        //氣象署
+        "https://www.cwa.gov.tw/V8/C/W/Precipitation.html",
+        //降雨資訊
+        "",
+        //天氣預報不放=空
+        ""
+        //氣溫資料不放=空
+    ];
+
+
+    // $keywords = [
+    //     ["氣象署", "font-size: 1.1em;color:red;", "https://www.cwa.gov.tw"],
+    //     ["降雨", "font-size: 1.1em;color:blue;", "https://www.cwa.gov.tw/V8/C/W/Precipitation.html"],
+    //     ["天氣",
+    //     "font-size: 1.1em;color:green;", "" ],
+    //     ["降溫",
+    //     "font-size: 1.1em;color:orange;", "" ]
+    // ];
+    // $keywords = [
+    //     [
+    //         'content' => '氣象署',
+    //         'style' => 'font-size: 1.1em;color:red;',
+    //         'url' => 'https://www.cwa.gov.tw'
+    //     ],
+    //     [
+    //         'content' => '降雨',
+    //         'style' => 'font-size:1em;color:red;',
+    //         'url' => 'https://www.cwa.gov.tw/V8/C/W/Precipitation.html'
+    //     ],
+    //     [
+    //         'content' => '天氣',
+    //         'style' => 'font-size:1.2em;color:blue;',
+    //         'url' => ''
+    //     ],
+    //     [
+    //         'content' => '降溫',
+    //         'style' => 'font-size:1.3em;color:orange;',
+    //         'url' => ''
+    //     ]
+    // ];
+
+
+    foreach ($keywords as $index => $keyword) {
+        if ($url[$index] != "") {
+            //    $strwithurl = "<a href='$url[$index]'>$keyword</a>";
+            $strwithstyle = "<a href='{$url[$index]}' style='{$style[$index]}'>$keyword</a>";
+            
+        } else {
+            // $strwithurl = $keyword;
+             $strwithstyle = "<span style='{$style[$index]}'>$keyword</span>";
+        }
+        //$strwithstyle = "<span style='$style[$index]'>$strwithurl</span>";
+
+
+        $str = str_replace(
+            "$keyword",
+            "$strwithstyle",
+            $str
+        );
     }
-    
+
     echo "<hr>";
     echo $str;
-    
+
     ?>
 
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
 </body>
 
 </html>
