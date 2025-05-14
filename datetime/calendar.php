@@ -6,50 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>線上月曆</title>
     <style>
-        h1 {
-            text-align: center;
-            color: blue;
-        }
+    h1 {
+        text-align: center;
+        color: blue;
+    }
 
-        table {
-            width: 50%;
-            border-collapse: collapse;
-            margin: 0 auto;
-            /* block模式中，在有寬度限制的情況下執行這行才有效果 */
-        }
+    table {
+        width: 60%;
+        border-collapse: collapse;
+        margin: 0 auto; /* 只有在設定寬度後才有效，讓表格置中 */
+    }
 
-        td {
-            border: 1px solid black;
-            text-align: center;
-            padding: 5px 10px;
-        }
+    td {
+        border: 1px solid black;
+        text-align: center;
+        padding: 5px 10px; /* 垂直5px、水平10px 的內距 */
+    }
 
-        .today{
-            background-color: lightblue;
-            font-weight: bold;
-        }
+    /* 今日的樣式 */
+    .today {
+        background-color: lightblue;
+        font-weight: bold;
+        color: white;
+    }
 
-        .other-month{
-            background-color: gray;
-            color: #aaa;
-        }
+    /* 其他月份的日期樣式 */
+    .other-month {
+        background-color: gray;
+        color: #aaa; /* 淡色文字 */
+    }
 
-        .holiday{
-            background-color: pink;
-            color: white;
-        }
+    /* 週末（假日）樣式 */
+    .holiday {
+        background-color: pink;
+        color: white;
+    }
 
-        tr:not(tr:nth-child(1)) td:hover{
-            background-color:lightblue;
-            cursor:pointer;
-            font-size:16px;
-            font-weight:bold;
-        }
-        .pass-date{
-            /* background-color:lightgray; */
-            color:#aaa;
-        }
-    </style>
+    /* 滑鼠移到格子上時的效果（不套在第一列） */
+    tr:not(tr:nth-child(1)) td:hover {
+        background-color: lightseagreen;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* 過去的日期樣式（可搭配 today / holiday / other-month 同時出現） */
+    .pass-date {
+        /* background-color: lightgray; */ /* 如果你想淡化背景可以打開 */
+        color: #aaa; /* 文字變淡 */
+    }
+
+    .date-num{
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .date-event{
+        height: 40px;
+    }
+</style>
+
 </head>
 
 <body>
@@ -62,7 +78,13 @@
     $theDaysOfMonth = date("t", strtotime($firstDay));
     //變數用駝峰式命名法:小駝峰 theDaysOfMonth/大駝峰 TheDaysOfMonth
     //蛇型/鍊式命名法 the_days_of_month / the-days-of-month
+    $spDate=[
+        '2025-05-01'=>'勞動節',
+        '2025-05-11'=>'母親節',
+        '2025-05-30'=>'端午節'
+    ];
     ?>
+
     <h2 style='text-align:center;'><?=date("Y 年 m 月"); ?></h2>
     <table>
         <tr>
@@ -111,8 +133,19 @@ for ($i = 0; $i < 6; $i++) {
         }
 
         // === 輸出表格格子（只顯示日） ===
-        echo "<td class='$class' data-date='$date'>";
-        echo date("d", $timestamp); 
+        echo "<td class='$class' data-date='$date' title='這是 $date'>";
+            
+            echo "<div class='date-num'>";
+            echo date("d", $timestamp); 
+            echo "</div>";
+
+            echo"<div class='date-event'>";
+                if(isset($spDate[$date])){
+                    echo $spDate[$date];
+                }
+
+            echo "</div>";
+
         echo "</td>";
     }
 
