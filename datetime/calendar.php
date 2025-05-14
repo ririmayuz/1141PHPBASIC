@@ -35,6 +35,7 @@
         /* 其他月份的日期樣式 */
         .other-month {
             background-color: gray;
+            font-size: 10px;
             color: #aaa;
             /* 淡色文字 */
         }
@@ -76,7 +77,7 @@
 
         .box,
         .th-box {
-            width: 50px;
+            width: 60px;
             height: 50px;
             background-color: lightblue;
             display: inline-block;
@@ -84,10 +85,12 @@
             box-sizing: border-box;
             margin-left: -1px;
             margin-top: -1px;
+            vertical-align: top;
+            /* vertical解決baseline造成的問題 */
         }
 
         .box-container {
-            width: 350px;
+            width: 420px;
             margin: 0 auto;
             box-sizing: border-box;
             padding-left: 1px;
@@ -98,6 +101,23 @@
             height: 25px;
             text-align: center;
         }
+
+        .day-num,
+        .day-week {
+            display: inline-block;
+            width: 50%;
+        }
+
+        .day-num {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .day-week {
+            color: #aaa;
+            font-size: 12px;
+            text-align: right;
+        }
     </style>
 
 </head>
@@ -107,11 +127,12 @@
     <!-- <div class="box-container">
     <?php
 
-    /* for($i=0;$i<20;$i++){
-        echo "<div class='box'>";
-            echo $i;
-        echo "</div>";
-    } */
+    //  for($i=0;$i<20;$i++){
+    //     echo "<div class='box'>";
+    //         echo $i;
+    //     echo "</div>";
+    // } 
+    // 
     ?>
     </div> -->
 
@@ -128,23 +149,59 @@
     //蛇型/鍊式命名法 the_days_of_month / the-days-of-month
 
     $spDate = [
+        '2025-04-04' => '兒童節',
+        '2025-04-05' => '清明節',
         '2025-05-01' => '勞動節',
         '2025-05-11' => '母親節',
-        '2025-05-30' => '端午節'
+        '2025-05-30' => '端午節',
+        '2025-06-07' => '生日'
     ];
+
+    $todoList = ['2025-05-09' => '開會'];
 
     $monthDays = [];
 
     //填入空白日期
     for ($i = 0; $i < $firstDayWeek; $i++) {
-        $monthDays[] = "&nbsp;";
+        $monthDays[] = [];
     }
     //填入當日日期
     for ($i = 0; $i < $theDaysOfMonth; $i++) {
         $timestamp = strtotime(" $i days", strtotime($firstDay));
         $date = date("d", $timestamp);
-        $monthDays[] = $date;
+        $holiday = "";
+
+        foreach ($spDate as $d => $value) {
+            if ($d == date("Y-m-d", $timestamp)) {
+                $holiday = $value;
+            }
+        }
+
+        $todo = '';
+        foreach ($todoList as $d => $value) {
+            if ($d == date("Y-m-d", $timestamp)) {
+                $todo = $value;
+            }
+        }
+
+        $monthDays[] =
+            [
+                "day" => date("d", $timestamp),
+                "fullDate" => date("Y-m-d", $timestamp),
+                "weekOfYear" => date("W", $timestamp),
+                "week" => date("w", $timestamp),
+                "daysOfYear" => date("z", $timestamp),
+                "workday" => date("N", $timestamp) < 6 ? true : false,
+                "holiday" => $holiday, //在前面的foreach已經處理該變數
+                "todo" => $todo
+            ];
     }
+
+    // echo "<pre>";
+    // print_r($monthDays);
+    // echo "</pre>";
+
+
     //建立外框及標題
     echo "<div class='box-container'>";
 
@@ -156,13 +213,60 @@
     echo "<div class='th-box'>五</div>";
     echo "<div class='th-box'>六</div>";
 
-    //使用foreach迴圈印出日期
+    // 使用 foreach 迴圈印出每一天的資料
     foreach ($monthDays as $day) {
+        echo "<div class='box'>"; // 外框容器：每一天的區塊
 
-        echo "<div class='box'>";
-        echo $day;
+        // ===== 日期資訊區塊 =====
+        echo "<div class='day-info'>";
+
+        // 顯示日期數字（幾號）
+        echo "<div class='day-num'>";
+        if (isset($day['day'])) {
+            echo $day["day"];
+        } else {
+            echo "&nbsp;"; // 如果沒有資料，顯示空白
+        }
         echo "</div>";
+
+        // 顯示週次（第幾週，可用來排行事曆）
+        echo "<div class='day-week'>";
+        if (isset($day['weekOfYear'])) {
+            echo $day["weekOfYear"];
+        } else {
+            echo "&nbsp;";
+        }
+        echo "</div>";
+
+        echo "</div>"; // 關閉 day-info 區塊
+
+
+        // ===== 節日資訊區塊 =====
+        echo "<div class='holiday-info'>";
+        if (isset($day['holiday'])) {
+            echo "<div class='holiday'>";
+            echo $day['holiday']; // 節日名稱
+            echo "</div>";
+        } else {
+            echo "&nbsp;";
+        }
+        echo "</div>";
+
+
+        // ===== 待辦事項區塊 =====
+        echo "<div class='todo-info'>";
+        if (isset($day['todo']) && !empty($day['todo'])) {
+            echo "<div class='todo'>";
+            echo $day['todo']; // 每日待辦事項
+            echo "</div>";
+        } else {
+            echo "&nbsp;";
+        }
+        echo "</div>";
+
+        echo "</div>"; // 關閉 box 區塊
     }
+
     echo "</div>";
     ?>
 
@@ -201,7 +305,7 @@
 
                 // 今日
                 if ($today == $date) {
-                    $class .= " today";
+                    $class = $class . " today";
 
                     // 非本月日期
                 } else if (date("m", $timestamp) != date("m", strtotime($firstDay))) {
