@@ -32,9 +32,10 @@
     <?php
     $today = date("Y-m-d");
     $firstDay = date("Y-m-01"); //文字模板  
-    $firstDayWeek = date("w", strtotime($firstDay)); // w/在這一週的哪一天
-
-
+    $firstDayWeek = date("w", strtotime($firstDay)); // w = 在這一週的哪一天
+    $theDaysOfMonth = date("t", strtotime($firstDay));
+    //變數用駝峰式命名法:小駝峰 theDaysOfMonth/大駝峰 TheDaysOfMonth
+    //蛇型/鍊式命名法 the_days_of_month / the-days-of-month
     ?>
 
     <table>
@@ -47,15 +48,27 @@
             <td>六</td>
             <td>日</td>
         </tr>
-    </table>
+    
 
     <?php
     for ($i = 0; $i < 6; $i++) {
         echo "<tr>";
 
         for ($j = 0; $j < 7; $j++) {
-            echo "<td>";
-            echo $j + 1 + ($i * 7) - $firstDayWeek;
+            //畫格子之前先算"這是哪一天?" 
+            $day=$j+($i*7)-$firstDayWeek;
+            $date = date("Y-m-d",strtotime("$day days",strtotime($firstDay)));
+            //$day=$j+1+($i*7)-$firstDayWeek; 用strtotime就不用+1了
+            //strtotime("+1");
+            //$d=date("Y-m-$day"); <-這三行是原本的程式碼
+
+            echo "<td>";            
+            //if($day>0 && $day<=$theDaysOfMonth){
+                echo $date;
+            //} 有strtotime也不需要判斷了
+            // echo $j + 1 + ($i * 7) - $firstDayWeek; <-
+            //if的簡寫法:沒有大括號甚至不用else?
+            
             echo "</td>";
         }
 
@@ -64,6 +77,7 @@
 
 
     ?>
+    </table>
 </body>
 
 </html>
