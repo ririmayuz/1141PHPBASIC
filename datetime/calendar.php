@@ -30,12 +30,24 @@
         }
 
         .other-month{
-            background-color: lightblue;
+            background-color: gray;
             color: #aaa;
         }
+
         .holiday{
             background-color: pink;
             color: white;
+        }
+
+        tr:not(tr:nth-child(1)) td:hover{
+            background-color:lightblue;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+        }
+        .pass-date{
+            /* background-color:lightgray; */
+            color:#aaa;
         }
     </style>
 </head>
@@ -51,7 +63,7 @@
     //變數用駝峰式命名法:小駝峰 theDaysOfMonth/大駝峰 TheDaysOfMonth
     //蛇型/鍊式命名法 the_days_of_month / the-days-of-month
     ?>
-    <h2><?php date("Y / m") ?></h2>
+    <h2 style='text-align:center;'><?=date("Y 年 m 月"); ?></h2>
     <table>
         <tr>
             <td>一</td>
@@ -64,40 +76,50 @@
         </tr>
     
 
-    <?php
-    for ($i = 0; $i < 6; $i++) {
-        echo "<tr>";
+<?php
+for ($i = 0; $i < 6; $i++) {
+    echo "<tr>";
 
-        for ($j = 0; $j < 7; $j++) {
-            //畫格子之前先算"這是哪一天?" 
-            $day=$j+($i*7)-$firstDayWeek;
-            $timestamp = strtotime("$day days",strtotime($firstDay));
-            $date = date("Y-m-d",$timestamp);
-            //$day=$j+1+($i*7)-$firstDayWeek; 用strtotime就不用+1了
-            //strtotime("+1");
-            //$d=date("Y-m-$day"); <-這三行是原本的程式碼
-            if($today==$date){
-                echo "<td class='today'>";
-            }else if(date("m",$timestamp) != date("m",strtotime($firstDay))){
-                echo "<td class= 'other-month'>";
-            }else{
-                echo "<td>";
-            }
-                        
-            //if($day>0 && $day<=$theDaysOfMonth){
-                echo $date;
-            //} 改用strtotime，已經不需要判斷
-            // echo $j + 1 + ($i * 7) - $firstDayWeek; <-
-            //if的簡寫法:沒有大括號甚至不用else?
-            
-            echo "</td>";
+    for ($j = 0; $j < 7; $j++) {
+        // === 計算當前格子的日期 ===
+        // 原寫法是直接算日數：$j + 1 + ($i * 7) - $firstDayWeek
+        // 改用 strtotime 處理跨月更準確，不用額外判斷
+        $day = $j + ($i * 7) - $firstDayWeek;
+        $timestamp = strtotime("$day days", strtotime($firstDay));
+        $date = date("Y-m-d", $timestamp);
+        $class = ""; // 初始化格子 class
+
+        // === 加入對應的 class ===
+
+        // 週末（六、日）
+        if (date("N", $timestamp) > 5) {
+            $class .= " holiday";
         }
 
-        echo "</tr>";
+        // 今日
+        if ($today == $date) {
+            $class .= " today";
+
+        // 非本月日期
+        } else if (date("m", $timestamp) != date("m", strtotime($firstDay))) {
+            $class .= " other-month";
+        }
+
+        // 已過的日期（今天之前）
+        if ($timestamp < strtotime($today)) {
+            $class .= " pass-date";
+        }
+
+        // === 輸出表格格子（只顯示日） ===
+        echo "<td class='$class' data-date='$date'>";
+        echo date("d", $timestamp); 
+        echo "</td>";
     }
 
+    echo "</tr>";
+}
+?>
 
-    ?>
     </table>
 </body>
 
