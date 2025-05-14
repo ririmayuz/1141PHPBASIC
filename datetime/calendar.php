@@ -267,7 +267,8 @@
         echo "</div>"; // 關閉 box 區塊
     }
 
-    echo "</div>";
+    echo "</div>";//????在哪裡
+
     ?>
 
     <h2 style='text-align:center;'><?= date("Y 年 m 月"); ?></h2>
