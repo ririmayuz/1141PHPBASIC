@@ -140,7 +140,12 @@
     <h1>線上日曆</h1>
 
     <?php
-    $month = 5;
+    if (isset($_GET['month'])) {
+        $month = $_GET['month'];
+    } else {
+        $month = date("m");
+    }
+    //$month = 5;
     $today = date("Y-$month-d");
     $firstDay = date("Y-$month-01"); //文字模板  
     $firstDayWeek = date("w", strtotime($firstDay)); // w = 在這一週的哪一天
@@ -200,6 +205,14 @@
     // echo "<pre>";
     // print_r($monthDays);
     // echo "</pre>";
+    ?>
+    <div style="display:flex;width:60%;margin:0 auto;justify-content:space-between;">
+
+        <a href="?">上一月</a>
+        <a href="?">下一月</a>
+    </div>
+
+    <?php
 
 
     //建立外框及標題
@@ -267,7 +280,7 @@
         echo "</div>"; // 關閉 box 區塊
     }
 
-    echo "</div>";//????在哪裡
+    echo "</div>"; //????在哪裡
 
     ?>
 
